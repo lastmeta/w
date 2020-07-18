@@ -37,29 +37,12 @@ def ls():
 
 ### navigation - wow, such hack!
 
-
 @main.command()
 def w():
     '''cd %WCF_REPOS%'''
-    #os.chdir(os.environ.get('WCF_REPOS', 'C:\\'))
     import pyautogui
     os.system(f"start cmd /K cd {os.environ.get('WCF_REPOS')}")
     pyautogui.hotkey('alt', 'f4')
-    #import subprocess
-    #subprocess.Popen(['cd', '%WCF_REPOS%'], stdout=subprocess.PIPE, shell=True).communicate()
-    #p = subprocess.Popen(['cd', '%WCF_REPOS%'], stdin=subprocess.PIPE, bufsize=0)
-    #p.stdin.write("echo what")
-    #p.kill()
-    #subprocess.call('cd ..', shell=True)
-    #subprocess.call('exit', shell=True)
-    #subprocess.call(['cmd', '/c', f"cd {os.environ.get('WCF_REPOS')}"], shell=True)
-    #subprocess.Popen('exit', shell=True).communicate()
-    #subprocess.Popen('echo what', shell=True).communicate()
-    #os.popen('exit').read()
-    #from w import config
-    #print(config.root('config', 'nav.bat'))
-    #subprocess.call(config.root('config', 'nav.bat'), shell=True)
-    #subprocess.call(["taskkill","/F","/PID",str(os.getppid())])
 
 
 @main.command()
