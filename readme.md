@@ -54,12 +54,6 @@ Commands:
                4 File(s)          8,836 bytes
                4 Dir(s)  367,129,309,184 bytes free
 
-...>w gs
-On branch master
-Your branch is up to date with 'origin/master'.
-
-nothing to commit, working tree clean
-
 ...>w gc --help
 Usage: w gc [OPTIONS] COMMIT
 
@@ -68,4 +62,31 @@ Usage: w gc [OPTIONS] COMMIT
 Options:
   --help  Show this message and exit.
 
+...>w gs
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   readme.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+...>w ga
+
+...>w gc "fix readme"
+[master 323c96f] fix readme
+ 1 file changed, 47 insertions(+), 10 deletions(-)
+
+...>w gg
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 1.02 KiB | 346.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/propername/w.git
+   888f314..323c96f  master -> master
 ```
