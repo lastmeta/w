@@ -80,10 +80,19 @@ def ga():
 
 
 @main.command()
-@click.argument('commit', type=str, required=True)
-def gc(commit: str):
-    '''git commit -m "<commit>"'''
+@click.argument('words', type=list, nargs=-1, required=True)
+def gc(words):
+    '''git commit -m "<words>"'''
+    commit = ' '.join([''.join(letters) for letters in words])
     print(os.popen(f'git commit -m "{commit}"').read())
+
+
+@main.command()
+@click.argument('words', type=list, nargs=-1, required=True)
+def gcn(words):
+    '''git commit -m "<words>"'''
+    commit = ' '.join([''.join(letters) for letters in words])
+    print(os.popen(f'git commit -m "{commit}" --no-verify').read())
 
 
 @main.command()
