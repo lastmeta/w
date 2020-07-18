@@ -1,5 +1,4 @@
 # w
-================
 
 w is a simple commandline utility using click. makes it easy to view, create, and delete alias-like commands in windows cmd.
 
