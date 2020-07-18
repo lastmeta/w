@@ -74,9 +74,9 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 ...>w ga
 
-...>w gc "fix readme"
-[master 323c96f] fix readme
- 1 file changed, 47 insertions(+), 10 deletions(-)
+...w>w gc this is a test
+[master 61d6766] this is a test
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
 ...>w gg
 Enumerating objects: 5, done.
