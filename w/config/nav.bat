@@ -1,0 +1,1 @@
+cd %WCF_REPOS%
