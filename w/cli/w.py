@@ -90,3 +90,14 @@ def gg():
 def gu(branch: str):
     '''git push -u origin <branch>'''
     print(os.popen(f'git push -u origin {branch}').read())
+
+@main.command()
+@click.argument('package', type=str, required=True)
+def gu(package: str):
+    '''git push -u origin <branch>'''
+    '''pip install --trusted-host repos.wcf.com --trusted-host pypi.python.org <package>'''
+    print(os.popen(
+        'pip install '
+        '--trusted-host repos.wcf.com '
+        '--trusted-host pypi.python.org '
+        f'{package}').read())
