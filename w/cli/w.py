@@ -43,6 +43,10 @@ def ls():
 #     print(os.popen('cd ..').read())
 # @main.command()
 # def r():
+#     '''cd %WCF_REPOS%'''
+#     print(os.popen('cd %REPOS%').read())
+# @main.command()
+# def r():
 #     '''cd %REPOS%'''
 #     print(os.popen('cd %REPOS%').read())
 
