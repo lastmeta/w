@@ -93,8 +93,7 @@ def gu(branch: str):
 
 @main.command()
 @click.argument('package', type=str, required=True)
-def gu(package: str):
-    '''git push -u origin <branch>'''
+def pipinstall(package: str):
     '''pip install --trusted-host repos.wcf.com --trusted-host pypi.python.org <package>'''
     print(os.popen(
         'pip install '
