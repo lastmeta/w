@@ -123,3 +123,9 @@ def pipinstall(package: str):
         '--trusted-host repos.wcf.com '
         '--trusted-host pypi.python.org '
         f'{package}').read())
+
+
+@main.command()
+def jn():
+    '''jupyter notebook'''
+    print(os.popen('jupyter notebook').read())
