@@ -114,6 +114,7 @@ def gu(branch: str):
     '''git push -u origin <branch>'''
     print(os.popen(f'git push -u origin {branch}').read())
 
+
 @main.command()
 @click.argument('package', type=str, required=True)
 def pipinstall(package: str):
@@ -129,3 +130,14 @@ def pipinstall(package: str):
 def jn():
     '''jupyter notebook'''
     print(os.popen('jupyter notebook').read())
+
+
+@main.command()
+def mixup():
+    '''starts heavenly_cleaners project'''
+    print(os.popen('set HOMEDRIVE=c:').read())
+    print(os.popen('docker pull postgres:11.4').read())
+    print(os.popen('docker run --rm --name pg-docker -e POSTGRES_PASSWORD=postgres -d -p 5434:5432 postgres:11.4').read())
+    #print(os.popen('mix archive.install hex phx_new 1.4.9').read())
+    #print(os.popen('mix phx.new blog').read())
+    #print(os.popen('mix ecto.create').read())
