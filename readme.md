@@ -86,6 +86,6 @@ Compressing objects: 100% (3/3), done.
 Writing objects: 100% (3/3), 1.02 KiB | 346.00 KiB/s, done.
 Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
 remote: Resolving deltas: 100% (1/1), completed with 1 local object.
-To https://github.com/propername/w.git
+To https://github.com/lastmeta/w.git
    888f314..323c96f  master -> master
 ```

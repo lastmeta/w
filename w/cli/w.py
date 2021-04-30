@@ -30,10 +30,21 @@ def a():
 
 
 @main.command()
+def vs():
+    '''code .'''
+    print(os.popen('code .').read())
+
+
+@main.command()
 def ls():
     '''dir'''
     print(os.popen('dir').read())
 
+
+@main.command()
+def ll():
+    '''dir'''
+    print(os.popen('dir').read())
 
 ### navigation - wow, such hack!
 

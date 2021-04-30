@@ -14,9 +14,12 @@ setup(
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     packages=[f'{NAME}.{p}' for p in find_packages(where=NAME)] + [NAME],
-    install_requires=[],
+    install_requires=[
+        'click',
+        'pyautogui',
+    ],
     python_requires='>=3.',
     author="Jordan Miller",
-    author_email="@wcf.com",
+    author_email="iamajordanmiller@gmail.com",
     url="https://bitbucket.wcf.com/wcf",
     entry_points={"console_scripts": ["w = w.cli.w:main"]})
