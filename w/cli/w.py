@@ -152,3 +152,20 @@ def mixup():
     #print(os.popen('mix archive.install hex phx_new 1.4.9').read())
     #print(os.popen('mix phx.new blog').read())
     #print(os.popen('mix ecto.create').read())
+
+
+@main.command()
+def ra():
+    '''npx react-native run-android'''
+    print(os.popen('npx react-native run-android').read())
+
+
+@main.command()
+def darttest():
+    '''dart --no-sound-null-safety test test/'''
+    print(os.popen('dart --no-sound-null-safety test test/').read())
+
+@main.command()
+def dartrun():
+    '''dart --no-sound-null-safety run bin/raven.dart'''
+    print(os.popen('dart --no-sound-null-safety run bin/raven.dart').read())
