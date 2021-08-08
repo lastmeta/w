@@ -161,11 +161,17 @@ def ra():
 
 
 @main.command()
-def darttest():
-    '''dart --no-sound-null-safety test test/'''
-    print(os.popen('dart --no-sound-null-safety test test/').read())
+@click.argument('dir', type=str, required=True)
+def darttest(dir: str):
+    '''dart --no-sound-null-safety test test/{dir}'''
+    print(os.popen(f'dart test test/{dir}').read())
 
 @main.command()
 def dartrun():
     '''dart --no-sound-null-safety run bin/raven.dart'''
-    print(os.popen('dart --no-sound-null-safety run bin/raven.dart').read())
+    print(os.popen('dart run bin/raven.dart').read())
+
+@main.command()
+def dartbuild():
+    '''dart --no-sound-null-safety run bin/raven.dart'''
+    print(os.popen('dart run build_runner build').read())
