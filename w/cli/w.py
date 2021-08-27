@@ -50,9 +50,9 @@ def ll():
 
 @main.command()
 def w():
-    '''cd %WCF_REPOS%'''
+    '''cd %mt_REPOS%'''
     import pyautogui
-    os.system(f"start cmd /K cd {os.environ.get('WCF_REPOS')}")
+    os.system(f"start cmd /K cd {os.environ.get('mt_REPOS')}")
     pyautogui.hotkey('alt', 'f4')
 
 
@@ -175,3 +175,31 @@ def dartrun():
 def dartbuild():
     '''dart --no-sound-null-safety run bin/raven.dart'''
     print(os.popen('dart run build_runner build').read())
+
+
+@main.command()
+@click.argument('command', type=str, required=False)
+def mt(command: str = 'pull'):
+    ''' MoonTree '''
+    def pull():
+        def get_mt_repos(mt_repos: str = None):
+            paths = {}
+            mt_repos = mt_repos or os.environ.get('MT_REPOS', '/repos')
+            for folder in os.listdir(mt_repos):
+                if '.' not in folder:
+                    paths[folder] = os.path.join(mt_repos, folder)
+            return paths
+
+        paths = get_mt_repos(mt_repos='/moontree/repos')
+        for folder, path in paths.items():
+            print(f'\n{folder}')
+            os.system(f'cd {path} && git pull')
+
+    if command == 'pull':
+        pull()
+    else:
+        line_end = 'each folder in MT_REPOS.\n'
+        print(
+            'Invalid command. Please use one of the following:\n\n'
+            f'pull          runs "git pull <folder>" for {line_end}')
+        pull()
