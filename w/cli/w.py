@@ -173,7 +173,7 @@ def dartrun():
 
 @main.command()
 def dartbuild():
-    '''dart --no-sound-null-safety run bin/raven.dart'''
+    '''dart run build_runner build'''
     print(os.popen('dart run build_runner build').read())
 
 
