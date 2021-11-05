@@ -195,11 +195,18 @@ def mt(command: str = 'pull'):
             print(f'\n{folder}')
             os.system(f'cd {path} && git pull')
 
+    def run():
+        path = '/moontree/repos/raven_mobile'
+        os.system(f'cd {path} && flutter run')
+
     if command == 'pull':
         pull()
+    elif command == 'run':
+        run()
     else:
         line_end = 'each folder in MT_REPOS.\n'
         print(
             'Invalid command. Please use one of the following:\n\n'
-            f'pull          runs "git pull <folder>" for {line_end}')
+            f'pull          runs "git pull <folder>" for {line_end}'
+            f'run           raven_mobile "flutter run"')
         pull()
