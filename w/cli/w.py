@@ -145,6 +145,18 @@ def gb(branch: str, commit: str, merge:bool=True, dev: str=None):
         print(os.popen(f'git push').read())
         print(os.popen(f'git status').read())
 
+
+@main.command()
+@click.argument('branch', type=str, required=True)
+@click.argument('dev', type=str, required=False)
+def gm(branch: str, dev: str=None):
+    '''switch to {dev}, merge {branch} push'''
+    print(os.popen(f'git checkout {dev or "dev"}').read())
+    print(os.popen(f'git merge {branch}').read())
+    print(os.popen(f'git push').read())
+    print(os.popen(f'git status').read())
+
+
 @main.command()
 @click.argument('package', type=str, required=True)
 def pipinstall(package: str):
