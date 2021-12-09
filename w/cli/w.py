@@ -131,7 +131,7 @@ def gu(branch: str):
 @click.argument('commit', type=str, required=True)
 @click.argument('dev', type=str, required=False)
 def gb(branch: str, commit: str, dev: str=None):
-    '''branch push, dev, merge branch'''
+    '''{branch} {commit} push, {dev}, merge push'''
     print(os.popen(f'git pull').read())
     print(os.popen(f'git checkout -b {branch}').read())
     print(os.popen(f'git add --all').read())
