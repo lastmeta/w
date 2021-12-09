@@ -127,6 +127,23 @@ def gu(branch: str):
 
 
 @main.command()
+@click.argument('branch', type=str, required=True)
+@click.argument('commit', type=str, required=True)
+@click.argument('dev', type=str, required=False)
+def gb(branch: str, commit: str, dev: str=None):
+    '''branch push, dev, merge branch'''
+    print(os.popen(f'git pull').read())
+    print(os.popen(f'git checkout -b {branch}').read())
+    print(os.popen(f'git add --all').read())
+    print(os.popen(f'git status').read())
+    print(os.popen(f'git commit -m "{commit}"').read())
+    print(os.popen(f'git push -u origin {branch}').read())
+    print(os.popen(f'git checkout {dev or "dev"}').read())
+    print(os.popen(f'git merge {branch}').read())
+    print(os.popen(f'git push').read())
+    print(os.popen(f'git status').read())
+
+@main.command()
 @click.argument('package', type=str, required=True)
 def pipinstall(package: str):
     '''pip install --trusted-host repos.wcf.com --trusted-host pypi.python.org <package>'''
