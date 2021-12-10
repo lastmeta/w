@@ -156,6 +156,10 @@ def gm(branch: str, dev: str=None):
     print(os.popen(f'git push').read())
     print(os.popen(f'git status').read())
 
+@main.command()
+def lg():
+    '''.\lazygit.exe'''
+    os.popen('.\lazygit.exe').read()
 
 @main.command()
 @click.argument('package', type=str, required=True)
