@@ -155,6 +155,13 @@ def gm(branch: str, dev: str=None):
     print(os.popen(f'git merge {branch}').read())
     print(os.popen(f'git push').read())
     print(os.popen(f'git status').read())
+@main.command()
+def gmk():
+    '''pull, git merge origin/kralverde, push'''
+    print(os.popen(f'git pull').read())
+    print(os.popen(f'git merge origin/kralverde').read())
+    print(os.popen(f'git push').read())
+    print(os.popen(f'git status').read())
 
 @main.command()
 def lg():
