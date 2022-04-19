@@ -172,7 +172,7 @@ def gmj():
     print(os.popen(f'git merge jordan').read())
     print(os.popen(f'git push').read())
     print(os.popen(f'git status').read())
-    print(os.popen(f'git checout jordan').read())
+    print(os.popen(f'git checkout jordan').read())
 
 @main.command()
 def lg():
