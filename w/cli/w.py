@@ -123,7 +123,7 @@ def gg(add:str, commit:str, branch:str):
     head = commit.split(' ')[0]
     tail = ' '.join(commit.split(' ')[1:])
     if head.isnumeric():
-        head = f'#{head}'
+        head = '#' + head
     if tail != '':
         commit = head + ' ' + tail
     else:
