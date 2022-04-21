@@ -114,8 +114,21 @@ def gcn(commit: str):
 
 
 @main.command()
-def gg():
-    '''git push'''
+#@click.argument('commit', type=list, required=True)
+@click.option('--commit','-c', prompt='commit message', help='start with a issue number if you like')
+def gg(commit: str):
+    '''git add --all, commit, push'''
+    head = commit[0]
+    tail = ' '.join(commit[1:])
+    if head.isnumeric():
+        head = f'#{head}'
+    if tail != '':
+        commit = head + ' ' + tail
+    else:
+        commit = head
+    print(os.popen('git status').read())
+    print(os.popen('git add --all').read())
+    print(os.popen(f'git commit -m "{commit}"').read())
     print(os.popen('git push').read())
 
 
