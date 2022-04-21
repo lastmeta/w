@@ -115,11 +115,13 @@ def gcn(commit: str):
 
 @main.command()
 #@click.argument('commit', type=list, required=True)
-@click.option('--commit','-c', prompt='commit message', help='start with a issue number if you like')
-def gg(commit: str):
+@click.option('--add','-a', default='--all', prompt='add (all)', help='default is all')
+@click.option('--commit','-c', default='commit', prompt='commit message', help='start with a issue number if you like')
+@click.option('--branch','-u', default='', prompt='add (all)', help='default is all')
+def gg(add:str, commit:str, branch:str):
     '''git add --all, commit, push'''
     head = commit[0]
-    tail = ' '.join(commit[1:])
+    tail = commit[1:]
     if head.isnumeric():
         head = f'#{head}'
     if tail != '':
@@ -127,9 +129,9 @@ def gg(commit: str):
     else:
         commit = head
     print(os.popen('git status').read())
-    print(os.popen('git add --all').read())
+    print(os.popen(f'git add {add}').read())
     print(os.popen(f'git commit -m "{commit}"').read())
-    print(os.popen('git push').read())
+    print(os.popen(f'git push {"" if branch == "" else "-u origin " + branch}').read())
 
 
 @main.command()
