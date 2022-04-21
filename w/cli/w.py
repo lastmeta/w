@@ -114,12 +114,18 @@ def gcn(commit: str):
 
 
 @main.command()
-#@click.argument('commit', type=list, required=True)
-@click.option('--add','-a', default='--all', prompt='add', help='default is all')
+##@click.argument('commit', type=list, required=True)
+#@click.option('--add','-a', default='--all', prompt='add', help='default is all')
 @click.option('--commit','-c', default='commit', prompt='commit message', help='start with a issue number if you like')
-@click.option('--branch','-u', default='', prompt='branch', help='default is all')
-def gg(add:str, commit:str, branch:str):
+#@click.option('--branch','-u', default='', prompt='branch', help='default is all')
+def gg(
+    #add:str,
+    commit:str,
+    #branch:str
+):
     '''git add --all, commit, push'''
+    add = '--all'
+    branch = ''
     head = commit.split(' ')[0]
     tail = ' '.join(commit.split(' ')[1:])
     if head.isnumeric():
