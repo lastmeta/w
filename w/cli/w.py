@@ -177,22 +177,17 @@ def gm(branch: str, dev: str=None):
     print(os.popen(f'git status').read())
 
 @main.command()
-def gmk():
-    '''pull, git merge origin/kralverde, push'''
+@click.argument('fromBranch', type=str, required=True)
+@click.argument('toBranch', type=str, required=False)
+def gm(fromBranch: str, toBranch: str):
+    '''pull, to, git merge from, push, from'''
+    toBranch = toBranch or 'main' if fromBranch == 'dev' else 'dev'
     print(os.popen(f'git pull').read())
-    print(os.popen(f'git merge origin/kralverde').read())
+    print(os.popen(f'git checkout {toBranch}').read())
+    print(os.popen(f'git merge {fromBranch}').read())
     print(os.popen(f'git push').read())
     print(os.popen(f'git status').read())
-
-@main.command()
-def gmj():
-    '''pull, dev, git merge jordan, push, jordan'''
-    print(os.popen(f'git pull').read())
-    print(os.popen(f'git checkout dev').read())
-    print(os.popen(f'git merge jordan').read())
-    print(os.popen(f'git push').read())
-    print(os.popen(f'git status').read())
-    print(os.popen(f'git checkout jordan').read())
+    print(os.popen(f'git checkout {fromBranch}').read())
 
 @main.command()
 def lg():
