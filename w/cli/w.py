@@ -166,17 +166,17 @@ def gb(branch: str, commit: str, merge:bool=True, dev: str=None):
         print(os.popen(f'git status').read())
 
 @main.command()
-@click.argument('fromBranch', type=str, required=True)
-@click.argument('toBranch', type=str, required=False)
-def gm(fromBranch: str, toBranch: str):
+@click.argument('from_branch', type=str, required=True)
+@click.argument('to_branch', type=str, required=False)
+def gm(from_branch: str, to_branch: str = None):
     '''pull, to, git merge from, push, from'''
-    toBranch = toBranch or 'main' if fromBranch == 'dev' else 'dev'
+    to_branch = to_branch or 'main' if from_branch == 'dev' else 'dev'
     print(os.popen(f'git pull').read())
-    print(os.popen(f'git checkout {toBranch}').read())
-    print(os.popen(f'git merge {fromBranch}').read())
+    print(os.popen(f'git checkout {to_branch}').read())
+    print(os.popen(f'git merge {from_branch}').read())
     print(os.popen(f'git push').read())
     print(os.popen(f'git status').read())
-    print(os.popen(f'git checkout {fromBranch}').read())
+    print(os.popen(f'git checkout {from_branch}').read())
 
 @main.command()
 def lg():
