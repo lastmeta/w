@@ -49,7 +49,7 @@ def ll():
 ### navigation - wow, such hack!
 
 @main.command()
-def w():
+def mt():
     '''cd %mt_REPOS%'''
     import pyautogui
     os.system(f"start cmd /K cd {os.environ.get('mt_REPOS')}")
@@ -71,6 +71,8 @@ def c():
     os.system(f"start cmd /K cd {os.path.dirname(os.getcwd())}")
     pyautogui.hotkey('alt', 'f4')
 
+
+## github
 
 @main.command()
 def gp():
@@ -96,14 +98,6 @@ def gc(words):
     '''git commit -m "<words>"'''
     commit = ' '.join([''.join(letters) for letters in words])
     print(os.popen(f'git commit -m "{commit}"').read())
-
-
-@main.command()
-@click.argument('words', type=list, nargs=-1, required=True)
-def gcn(words):
-    '''git commit -m "<words>"'''
-    commit = ' '.join([''.join(letters) for letters in words])
-    print(os.popen(f'git commit -m "{commit}" --no-verify').read())
 
 
 @main.command()
@@ -145,32 +139,12 @@ def gu(branch: str):
     '''git push -u origin <branch>'''
     print(os.popen(f'git push -u origin {branch}').read())
 
-
-@main.command()
-@click.argument('branch', type=str, required=True)
-@click.argument('commit', type=str, required=True)
-@click.argument('merge', type=bool, required=False)
-@click.argument('dev', type=str, required=False)
-def gb(branch: str, commit: str, merge:bool=True, dev: str=None):
-    '''{branch} {commit} push, {dev}, merge push'''
-    print(os.popen(f'git pull').read())
-    print(os.popen(f'git checkout -b {branch}').read())
-    print(os.popen(f'git add --all').read())
-    print(os.popen(f'git status').read())
-    print(os.popen(f'git commit -m "{commit}"').read())
-    print(os.popen(f'git push -u origin {branch}').read())
-    if merge:
-        print(os.popen(f'git checkout {dev or "dev"}').read())
-        print(os.popen(f'git merge {branch}').read())
-        print(os.popen(f'git push').read())
-        print(os.popen(f'git status').read())
-
 @main.command()
 @click.argument('from_branch', type=str, required=True)
 @click.argument('to_branch', type=str, required=False)
 def gm(from_branch: str, to_branch: str = None):
     '''pull, to, git merge from, push, from'''
-    to_branch = to_branch or 'main' if from_branch == 'dev' else 'dev'
+    to_branch = to_branch or 'rc' if from_branch == 'dev' else 'dev'
     print(os.popen(f'git pull').read())
     print(os.popen(f'git checkout {to_branch}').read())
     print(os.popen(f'git merge {from_branch}').read())
@@ -182,6 +156,8 @@ def gm(from_branch: str, to_branch: str = None):
 def lg():
     '''.\lazygit.exe'''
     os.popen('.\lazygit.exe').read()
+
+## python
 
 @main.command()
 @click.argument('package', type=str, required=True)
@@ -199,71 +175,37 @@ def jn():
     '''jupyter notebook'''
     print(os.popen('jupyter notebook').read())
 
+# flutter
 
 @main.command()
-def mixup():
-    '''starts heavenly_cleaners project'''
-    print(os.popen('set HOMEDRIVE=c:').read())
-    print(os.popen('docker pull postgres:11.4').read())
-    print(os.popen('docker run --rm --name pg-docker -e POSTGRES_PASSWORD=postgres -d -p 5434:5432 postgres:11.4').read())
-    #print(os.popen('mix archive.install hex phx_new 1.4.9').read())
-    #print(os.popen('mix phx.new blog').read())
-    #print(os.popen('mix ecto.create').read())
-
-
-@main.command()
-def ra():
-    '''npx react-native run-android'''
-    print(os.popen('npx react-native run-android').read())
-
-
-@main.command()
-@click.argument('dir', type=str, required=True)
-def darttest(dir: str):
-    '''dart --no-sound-null-safety test test/{dir}'''
-    print(os.popen(f'dart test test/{dir}').read())
+#@click.option('--watch','-w', default='watch', prompt='behavior', help='watch')
+@click.argument('behavior', type=str, required=True)
+@click.argument('dir', type=str, required=False)
+def flutter(behavior:str, dir: str = ''):
+    '''flutter [run build watch clean get test]: run | pub run build_runner build | pub run build_runner watch --delete-conflicting-outputs | clean | pub get | test test/DIR'''
+    if behavior in ['run', '--run', 'r', '-r']:
+        print(os.popen('flutter run').read())
+    if behavior in ['build', '--build', 'b', '-b']:
+        print(os.popen('flutter pub run build_runner build').read())
+    if behavior in ['watch', '--watch', 'w', '-w']:
+        print(os.popen('flutter pub run build_runner watch --delete-conflicting-outputs').read())
+    if behavior in ['clean', '--clean', 'c', '-c']:
+        print(os.popen('flutter clean').read())
+    if behavior in ['get', '--get', 'g', '-g']:
+        print(os.popen('flutter pub get').read())
+    if behavior in ['test', '--test', 't', '-t']:
+        print(os.popen(f'flutter test test/{dir}').read())
 
 @main.command()
-def dartrun():
-    '''dart --no-sound-null-safety run bin/raven.dart'''
-    print(os.popen('dart run bin/raven.dart').read())
-
-@main.command()
-def dartbuild():
-    '''dart run build_runner build'''
-    print(os.popen('dart run build_runner build').read())
-
-
-@main.command()
-@click.argument('command', type=str, required=False)
-def mt(command: str = 'pull'):
-    ''' MoonTree '''
-    def pull():
-        def get_mt_repos(mt_repos: str = None):
-            paths = {}
-            mt_repos = mt_repos or os.environ.get('MT_REPOS', '/repos')
-            for folder in os.listdir(mt_repos):
-                if '.' not in folder:
-                    paths[folder] = os.path.join(mt_repos, folder)
-            return paths
-
-        paths = get_mt_repos(mt_repos='/moontree/repos')
-        for folder, path in paths.items():
-            print(f'\n{folder}')
-            os.system(f'cd {path} && git pull')
-
-    def run():
-        path = '/moontree/repos/raven_mobile'
-        os.system(f'cd {path} && flutter run')
-
-    if command == 'pull':
-        pull()
-    elif command == 'run':
-        run()
-    else:
-        line_end = 'each folder in MT_REPOS.\n'
-        print(
-            'Invalid command. Please use one of the following:\n\n'
-            f'pull          runs "git pull <folder>" for {line_end}'
-            f'run           raven_mobile "flutter run"')
-        pull()
+@click.argument('behavior', type=str, required=True)
+@click.argument('dir', type=str, required=False)
+def dart(behavior:str, dir: str = ''):
+    '''dart [build clean get test]: run build_runner build | clean | pub get | test test/DIR'''
+    if behavior in ['build', '--build', 'b', '-b']:
+        print(os.popen('dart run build_runner build').read())
+    if behavior in ['clean', '--clean', 'c', '-c']:
+        print(os.popen('dart clean').read())
+    if behavior in ['get', '--get', 'g', '-g']:
+        print(os.popen('dart pub get').read())
+    if behavior in ['test', '--test', 't', '-t']:
+        print(os.popen(f'dart test test/{dir}').read())
