@@ -209,3 +209,9 @@ def dart(behavior:str, dir: str = ''):
         print(os.popen('dart pub get').read())
     if behavior in ['test', '--test', 't', '-t']:
         print(os.popen(f'dart test test/{dir}').read())
+
+
+@main.command()
+def sg():
+    '''serverpod generate'''
+    print(os.popen('serverpod generate').read())
