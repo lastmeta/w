@@ -148,24 +148,32 @@ def gm(from_branch: str, to_branch: str = None, next_branch: str = None, last_br
     '''pull, to, git merge from, push, from'''
     to_branch = to_branch or ('rc' if from_branch == 'dev' else 'dev')
     return_branch = return_branch or from_branch
-    print(os.popen(f'git pull').read())
-    print(os.popen(f'git checkout {to_branch}').read())
-    print(os.popen(f'git merge {from_branch}').read())
-    if (
-        (input('Good to git push? [y]') or 'y')
-        .lower().startswith('y')
-    ):
-        print(os.popen(f'git push').read())
-        print(os.popen(f'git status').read())
-        print(os.popen(f'git checkout {return_branch}').read())
-        if next_branch is not None:
-            gm(
-            from_branch=to_branch,
-            to_branch=next_branch,
-            next_branch=last_branch,
-            return_branch=return_branch)
-    else:
-        print('Aborted.')
+
+    def logic(from_branch: str, to_branch: str = None, next_branch: str = None, last_branch: str = None, return_branch: str = None):
+        print(os.popen(f'git pull').read())
+        print(os.popen(f'git checkout {to_branch}').read())
+        print(os.popen(f'git merge {from_branch}').read())
+        if (
+            (input('Good to git push? [y]') or 'y')
+            .lower().startswith('y')
+        ):
+            print(os.popen(f'git push').read())
+            print(os.popen(f'git status').read())
+            print(os.popen(f'git checkout {return_branch}').read())
+            if next_branch is not None:
+                logic(
+                    from_branch=to_branch,
+                    to_branch=next_branch,
+                    next_branch=last_branch,
+                    return_branch=return_branch)
+        else:
+            print('Aborted.')
+
+    logic(
+        from_branch=from_branch,
+        to_branch=to_branch,
+        next_branch=next_branch,
+        return_branch=return_branch)
 
 @main.command()
 def lg():
