@@ -159,13 +159,14 @@ def gm(from_branch: str, to_branch: str = None, next_branch: str = None, last_br
         ):
             print(os.popen(f'git push').read())
             print(os.popen(f'git status').read())
-            print(os.popen(f'git checkout {return_branch}').read())
             if next_branch is not None:
                 logic(
                     from_branch=to_branch,
                     to_branch=next_branch,
                     next_branch=last_branch,
                     return_branch=return_branch)
+            else:
+                print(os.popen(f'git checkout {return_branch}').read())
         else:
             print('Aborted.')
 
