@@ -145,7 +145,7 @@ def gu(branch: str):
 @click.argument('next_branch', type=str, required=False)
 @click.argument('last_branch', type=str, required=False)
 def gm(from_branch: str, to_branch: str = None, next_branch: str = None, last_branch: str = None, return_branch: str = None):
-    '''pull, to, git merge from, push, from'''
+    '''pull, to, git merge from, push, from :||'''
     to_branch = to_branch or ('rc' if from_branch == 'dev' else 'dev')
     return_branch = return_branch or from_branch
 
