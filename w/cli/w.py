@@ -142,15 +142,30 @@ def gu(branch: str):
 @main.command()
 @click.argument('from_branch', type=str, required=True)
 @click.argument('to_branch', type=str, required=False)
-def gm(from_branch: str, to_branch: str = None):
+@click.argument('next_branch', type=str, required=False)
+@click.argument('last_branch', type=str, required=False)
+def gm(from_branch: str, to_branch: str = None, next_branch: str = None, last_branch: str = None, return_branch: str = None):
     '''pull, to, git merge from, push, from'''
-    to_branch = to_branch or 'rc' if from_branch == 'dev' else 'dev'
+    to_branch = to_branch or ('rc' if from_branch == 'dev' else 'dev')
+    return_branch = return_branch or from_branch
     print(os.popen(f'git pull').read())
     print(os.popen(f'git checkout {to_branch}').read())
     print(os.popen(f'git merge {from_branch}').read())
-    print(os.popen(f'git push').read())
-    print(os.popen(f'git status').read())
-    print(os.popen(f'git checkout {from_branch}').read())
+    if (
+        (input('Good to git push? [y] ') or 'y')
+        .lower().startswith('n')
+    ):
+        print(os.popen(f'git push').read())
+        print(os.popen(f'git status').read())
+        print(os.popen(f'git checkout {return_branch}').read())
+        if next_branch is not None:
+            gm(
+            from_branch=to_branch,
+            to_branch=next_branch,
+            next_branch=last_branch,
+            return_branch=return_branch)
+    else:
+        print('Aborted.')
 
 @main.command()
 def lg():
