@@ -152,8 +152,8 @@ def gm(from_branch: str, to_branch: str = None, next_branch: str = None, last_br
     print(os.popen(f'git checkout {to_branch}').read())
     print(os.popen(f'git merge {from_branch}').read())
     if (
-        (input('Good to git push? [y] ') or 'y')
-        .lower().startswith('n')
+        (input('Good to git push? [y]') or 'y')
+        .lower().startswith('y')
     ):
         print(os.popen(f'git push').read())
         print(os.popen(f'git status').read())
