@@ -239,3 +239,8 @@ def dart(behavior:str, dir: str = ''):
 def sg():
     '''serverpod generate'''
     print(os.popen('serverpod generate').read())
+
+@main.command()
+def mx():
+    '''iex -S mix phx.server'''
+    print(os.popen('iex -S mix phx.server').read())
