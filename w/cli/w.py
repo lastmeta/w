@@ -206,7 +206,7 @@ def jn():
 @click.argument('behavior', type=str, required=True)
 @click.argument('dir', type=str, required=False)
 def flutter(behavior:str, dir: str = ''):
-    '''flutter [run build watch clean get test]: run | pub run build_runner build | pub run build_runner watch --delete-conflicting-outputs | clean | pub get | test test/DIR'''
+    '''flutter [run build watch clean get test upgrade]: run | pub run build_runner build | pub run build_runner watch --delete-conflicting-outputs | clean | pub get | test test/DIR | upgrade'''
     if behavior in ['run', '--run', 'r', '-r']:
         print(os.popen('flutter run').read())
     if behavior in ['build', '--build', 'b', '-b']:
@@ -219,12 +219,14 @@ def flutter(behavior:str, dir: str = ''):
         print(os.popen('flutter pub get').read())
     if behavior in ['test', '--test', 't', '-t']:
         print(os.popen(f'flutter test test/{dir}').read())
+    if behavior in ['upgrade', '--upgrade', 'u', '-u']:
+        print(os.popen('flutter upgrade').read())
 
 @main.command()
 @click.argument('behavior', type=str, required=True)
 @click.argument('dir', type=str, required=False)
 def dart(behavior:str, dir: str = ''):
-    '''dart [build clean get test]: run build_runner build | clean | pub get | test test/DIR'''
+    '''dart [build clean get test update]: run build_runner build | clean | pub get | test test/DIR | choco upgrade dart-sdk -y'''
     if behavior in ['build', '--build', 'b', '-b']:
         print(os.popen('dart run build_runner build').read())
     if behavior in ['clean', '--clean', 'c', '-c']:
@@ -233,6 +235,8 @@ def dart(behavior:str, dir: str = ''):
         print(os.popen('dart pub get').read())
     if behavior in ['test', '--test', 't', '-t']:
         print(os.popen(f'dart test test/{dir}').read())
+    if behavior in ['update', '--update', 'u', '-u']:
+        print(os.popen(f'choco upgrade dart-sdk -y').read())
 
 
 @main.command()
