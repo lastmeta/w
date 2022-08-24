@@ -245,6 +245,6 @@ def sg():
     print(os.popen('serverpod generate').read())
 
 @main.command()
-def mx():
+def iex():
     '''iex -S mix phx.server'''
     print(os.popen('iex -S mix phx.server').read())
