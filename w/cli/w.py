@@ -1,6 +1,7 @@
 import os
 import click
 
+
 @click.group()
 def main():
     '''display help '''
@@ -14,7 +15,8 @@ def help():
         '(which you must have already done)... '
         'please modify the w.py file at:',
         os.path.dirname(os.path.abspath(__file__)))
-    print(os.popen(f'explorer {os.path.dirname(os.path.abspath(__file__))}').read())
+    print(
+        os.popen(f'explorer {os.path.dirname(os.path.abspath(__file__))}').read())
 
 
 @main.command()
@@ -46,7 +48,8 @@ def ll():
     '''dir'''
     print(os.popen('dir').read())
 
-### navigation - wow, such hack!
+# navigation - wow, such hack!
+
 
 @main.command()
 def mt():
@@ -72,7 +75,7 @@ def c():
     pyautogui.hotkey('alt', 'f4')
 
 
-## github
+# github
 
 @main.command()
 def gp():
@@ -108,14 +111,14 @@ def gcn(commit: str):
 
 
 @main.command()
-##@click.argument('commit', type=list, required=True)
-#@click.option('--add','-a', default='--all', prompt='add', help='default is all')
-@click.option('--commit','-c', default='commit', prompt='commit message', help='start with a issue number if you like')
-#@click.option('--branch','-u', default='', prompt='branch', help='default is all')
+# @click.argument('commit', type=list, required=True)
+# @click.option('--add','-a', default='--all', prompt='add', help='default is all')
+@click.option('--commit', '-c', default='commit', prompt='commit message', help='start with a issue number if you like')
+# @click.option('--branch','-u', default='', prompt='branch', help='default is all')
 def gg(
-    #add:str,
-    commit:str,
-    #branch:str
+    # add:str,
+    commit: str,
+    # branch:str
 ):
     '''git add --all, commit, push'''
     add = '--all'
@@ -131,13 +134,31 @@ def gg(
     print(os.popen('git status').read())
     print(os.popen(f'git add {add}').read())
     print(os.popen(f'git commit -m "{commit}"').read())
-    print(os.popen(f'git push {"" if branch == "" else "-u origin " + branch}').read())
+    print(
+        os.popen(f'git push {"" if branch == "" else "-u origin " + branch}').read())
+
+
+@main.command()
+# @click.argument('commit', type=list, required=True)
+# @click.option('--add','-a', default='--all', prompt='add', help='default is all')
+@click.option('--commit', '-c', default='commit', prompt='commit message', help='start with a issue number if you like')
+# @click.option('--branch','-u', default='', prompt='branch', help='default is all')
+def ggp(
+    # add:str,
+    commit: str,
+    # branch:str
+):
+    '''git add --all, commit, push, dart publish'''
+    gg(commit)
+    dart('publish')
+
 
 @main.command()
 @click.argument('branch', type=str, required=True)
 def gu(branch: str):
     '''git push -u origin <branch>'''
     print(os.popen(f'git push -u origin {branch}').read())
+
 
 @main.command()
 @click.argument('from_branch', type=str, required=True)
@@ -176,12 +197,14 @@ def gm(from_branch: str, to_branch: str = None, next_branch: str = None, last_br
         next_branch=next_branch,
         return_branch=return_branch)
 
+
 @main.command()
 def lg():
     '''.\lazygit.exe'''
     os.popen('.\lazygit.exe').read()
 
-## python
+# python
+
 
 @main.command()
 @click.argument('package', type=str, required=True)
@@ -201,18 +224,20 @@ def jn():
 
 # flutter
 
+
 @main.command()
-#@click.option('--watch','-w', default='watch', prompt='behavior', help='watch')
+# @click.option('--watch','-w', default='watch', prompt='behavior', help='watch')
 @click.argument('behavior', type=str, required=True)
 @click.argument('dir', type=str, required=False)
-def flutter(behavior:str, dir: str = ''):
+def flutter(behavior: str, dir: str = ''):
     '''flutter [run build watch clean get test upgrade]: run | pub run build_runner build | pub run build_runner watch --delete-conflicting-outputs | clean | pub get | test test/DIR | upgrade'''
     if behavior in ['run', '--run', 'r', '-r']:
         print(os.popen('flutter run').read())
     if behavior in ['build', '--build', 'b', '-b']:
         print(os.popen('flutter pub run build_runner build').read())
     if behavior in ['watch', '--watch', 'w', '-w']:
-        print(os.popen('flutter pub run build_runner watch --delete-conflicting-outputs').read())
+        print(os.popen(
+            'flutter pub run build_runner watch --delete-conflicting-outputs').read())
     if behavior in ['clean', '--clean', 'c', '-c']:
         print(os.popen('flutter clean').read())
     if behavior in ['get', '--get', 'g', '-g']:
@@ -222,11 +247,12 @@ def flutter(behavior:str, dir: str = ''):
     if behavior in ['upgrade', '--upgrade', 'u', '-u']:
         print(os.popen('flutter upgrade').read())
 
+
 @main.command()
 @click.argument('behavior', type=str, required=True)
 @click.argument('dir', type=str, required=False)
-def dart(behavior:str, dir: str = ''):
-    '''dart [build clean get test update]: run build_runner build | clean | pub get | test test/DIR | choco upgrade dart-sdk -y'''
+def dart(behavior: str, dir: str = ''):
+    '''dart [build clean get test update publish]: run build_runner build | clean | pub get | test test/DIR | choco upgrade dart-sdk -y | pub publish'''
     if behavior in ['build', '--build', 'b', '-b']:
         print(os.popen('dart run build_runner build').read())
     if behavior in ['clean', '--clean', 'c', '-c']:
@@ -237,12 +263,15 @@ def dart(behavior:str, dir: str = ''):
         print(os.popen(f'dart test test/{dir}').read())
     if behavior in ['update', '--update', 'u', '-u']:
         print(os.popen(f'choco upgrade dart-sdk -y').read())
+    if behavior in ['publish', '--publish', 'p', '-p', 'push']:
+        print(os.popen(f'dart pub publish -f').read())
 
 
 @main.command()
 def sg():
     '''serverpod generate'''
     print(os.popen('serverpod generate').read())
+
 
 @main.command()
 def iex():
