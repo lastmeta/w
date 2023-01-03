@@ -15,38 +15,37 @@ def help():
         '(which you must have already done)... '
         'please modify the w.py file at:',
         os.path.dirname(os.path.abspath(__file__)))
-    print(
-        os.popen(f'explorer {os.path.dirname(os.path.abspath(__file__))}').read())
+    executeCommand(f'explorer {os.path.dirname(os.path.abspath(__file__))}')
 
 
 @main.command()
 def e():
     '''explorer .'''
-    print(os.popen('explorer .').read())
+    executeCommand('explorer .')
 
 
 @main.command()
 def a():
     '''atom .'''
-    print(os.popen('atom .').read())
+    executeCommand('atom .')
 
 
 @main.command()
 def vs():
     '''code .'''
-    print(os.popen('code .').read())
+    executeCommand('code .')
 
 
 @main.command()
 def ls():
     '''dir'''
-    print(os.popen('dir').read())
+    executeCommand('dir')
 
 
 @main.command()
 def ll():
     '''dir'''
-    print(os.popen('dir').read())
+    executeCommand('dir')
 
 # navigation - wow, such hack!
 
@@ -80,19 +79,19 @@ def c():
 @main.command()
 def gp():
     '''git pull'''
-    print(os.popen('git pull').read())
+    executeCommand('git pull')
 
 
 @main.command()
 def gs():
     '''git status'''
-    print(os.popen('git status').read())
+    executeCommand('git status')
 
 
 @main.command()
 def ga():
     '''git add --all'''
-    print(os.popen('git add --all').read())
+    executeCommand('git add --all')
 
 
 @main.command()
@@ -100,14 +99,14 @@ def ga():
 def gc(words):
     '''git commit -m "<words>"'''
     commit = ' '.join([''.join(letters) for letters in words])
-    print(os.popen(f'git commit -m "{commit}"').read())
+    executeCommand(f'git commit -m "{commit}"')
 
 
 @main.command()
 @click.argument('commit', type=str, required=True)
 def gcn(commit: str):
     '''git commit -m "<commit>" --no-verify'''
-    print(os.popen(f'git commit -m "{commit}" --no-verify').read())
+    executeCommand(f'git commit -m "{commit}" --no-verify')
 
 
 @main.command()
@@ -131,11 +130,13 @@ def gg(
         commit = head + ' ' + tail
     else:
         commit = head
-    print(os.popen('git status').read())
-    print(os.popen(f'git add {add}').read())
-    print(os.popen(f'git commit -m "{commit}"').read())
-    print(
-        os.popen(f'git push {"" if branch == "" else "-u origin " + branch}').read())
+    executeCommands(
+        [
+            'git status',
+            f'git add {add}',
+            f'git commit -m "{commit}"',
+            f'git push {"" if branch == "" else "-u origin " + branch}'],
+        display=False)
 
 
 @main.command()
@@ -157,7 +158,7 @@ def ggp(
 @click.argument('branch', type=str, required=True)
 def gu(branch: str):
     '''git push -u origin <branch>'''
-    print(os.popen(f'git push -u origin {branch}').read())
+    executeCommand(f'git push -u origin {branch}')
 
 
 @main.command()
@@ -171,15 +172,15 @@ def gm(from_branch: str, to_branch: str = None, next_branch: str = None, last_br
     return_branch = return_branch or from_branch
 
     def logic(from_branch: str, to_branch: str = None, next_branch: str = None, last_branch: str = None, return_branch: str = None):
-        print(os.popen(f'git pull').read())
-        print(os.popen(f'git checkout {to_branch}').read())
-        print(os.popen(f'git merge {from_branch}').read())
+        executeCommand(f'git pull')
+        executeCommand(f'git checkout {to_branch}')
+        executeCommand(f'git merge {from_branch}')
         if (
             (input('Good to git push? [y]') or 'y')
             .lower().startswith('y')
         ):
-            print(os.popen(f'git push').read())
-            print(os.popen(f'git status').read())
+            executeCommand(f'git push')
+            executeCommand(f'git status')
             if next_branch is not None:
                 logic(
                     from_branch=to_branch,
@@ -187,7 +188,7 @@ def gm(from_branch: str, to_branch: str = None, next_branch: str = None, last_br
                     next_branch=last_branch,
                     return_branch=return_branch)
             else:
-                print(os.popen(f'git checkout {return_branch}').read())
+                executeCommand(f'git checkout {return_branch}')
         else:
             print('Aborted.')
 
@@ -210,20 +211,17 @@ def lg():
 @click.argument('package', type=str, required=True)
 def pipinstall(package: str):
     '''pip install --trusted-host repos.wcf.com --trusted-host pypi.python.org <package>'''
-    print(os.popen(
+    executeCommand(
         'pip install '
         '--trusted-host repos.wcf.com '
         '--trusted-host pypi.python.org '
-        f'{package}').read())
+        f'{package}')
 
 
 @main.command()
 def jn():
     '''jupyter notebook'''
-    print(os.popen('jupyter notebook').read())
-
-# flutter
-
+    executeCommand('jupyter notebook')
 
 @main.command()
 # @click.option('--watch','-w', default='watch', prompt='behavior', help='watch')
@@ -232,20 +230,20 @@ def jn():
 def flutter(behavior: str, dir: str = ''):
     '''flutter [run build watch clean get test upgrade]: run | pub run build_runner build | pub run build_runner watch --delete-conflicting-outputs | clean | pub get | test test/DIR | upgrade'''
     if behavior in ['run', '--run', 'r', '-r']:
-        print(os.popen('flutter run').read())
+        cmd = 'flutter run'
     if behavior in ['build', '--build', 'b', '-b']:
-        print(os.popen('flutter pub run build_runner build').read())
+        cmd = 'flutter pub run build_runner build'
     if behavior in ['watch', '--watch', 'w', '-w']:
-        print(os.popen(
-            'flutter pub run build_runner watch --delete-conflicting-outputs').read())
+        cmd = 'flutter pub run build_runner watch --delete-conflicting-outputs'
     if behavior in ['clean', '--clean', 'c', '-c']:
-        print(os.popen('flutter clean').read())
+        cmd = 'flutter clean'
     if behavior in ['get', '--get', 'g', '-g']:
-        print(os.popen('flutter pub get').read())
+        cmd = 'flutter pub get'
     if behavior in ['test', '--test', 't', '-t']:
-        print(os.popen(f'flutter test test/{dir}').read())
+        cmd = f'flutter test test/{dir}'
     if behavior in ['upgrade', '--upgrade', 'u', '-u']:
-        print(os.popen('flutter upgrade').read())
+        cmd = 'flutter upgrade'
+    executeCommand(cmd)
 
 
 @main.command()
@@ -254,26 +252,34 @@ def flutter(behavior: str, dir: str = ''):
 def dart(behavior: str, dir: str = ''):
     '''dart [build clean get test update publish]: run build_runner build | clean | pub get | test test/DIR | choco upgrade dart-sdk -y | pub publish'''
     if behavior in ['build', '--build', 'b', '-b']:
-        print(os.popen('dart run build_runner build').read())
+        cmd = 'dart run build_runner build'
     if behavior in ['clean', '--clean', 'c', '-c']:
-        print(os.popen('dart clean').read())
+        cmd = 'dart clean'
     if behavior in ['get', '--get', 'g', '-g']:
-        print(os.popen('dart pub get').read())
+        cmd = 'dart pub get'
     if behavior in ['test', '--test', 't', '-t']:
-        print(os.popen(f'dart test test/{dir}').read())
+        cmd = f'dart test test/{dir}'
     if behavior in ['update', '--update', 'u', '-u']:
-        print(os.popen(f'choco upgrade dart-sdk -y').read())
+        cmd = f'choco upgrade dart-sdk -y'
     if behavior in ['publish', '--publish', 'p', '-p', 'push']:
-        print(os.popen(f'dart pub publish -f').read())
-
+        cmd = f'dart pub publish -f'
+    executeCommand(cmd)
 
 @main.command()
 def sg():
     '''serverpod generate'''
-    print(os.popen('serverpod generate').read())
-
+    executeCommand('serverpod generate')
 
 @main.command()
 def iex():
     '''iex -S mix phx.server'''
-    print(os.popen('iex -S mix phx.server').read())
+    executeCommand('iex -S mix phx.server')
+
+def executeCommands(cmds: str, display: bool = True):
+    for cmd in cmds:
+        executeCommand(cmd, display=display)
+
+def executeCommand(cmd: str, display: bool = True):
+    if display:
+        print('>>> ' + cmd)
+    print(os.popen(cmd).read())
