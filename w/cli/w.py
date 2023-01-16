@@ -270,6 +270,17 @@ def sg():
     '''serverpod generate'''
     executeCommand('serverpod generate')
 
+
+@main.command()
+def sp():
+    '''serverpod move protocol to client_back.'''
+    import shutil;
+    shutil.rmtree('C:\moontree\moontreeV1\client_back\lib\server\src\protocol')
+    print('removed C:\moontree\moontreeV1\client_back\lib\server\src\protocol')
+    shutil.copytree('C:\moontree\server2\serverv2_client\lib\src\protocol', 'C:\moontree\moontreeV1\client_back\lib\server\src\protocol')
+    print('copied C:\moontree\server2\serverv2_client\lib\src\protocol')
+    print('pasted C:\moontree\moontreeV1\client_back\lib\server\src\protocol')
+
 @main.command()
 def iex():
     '''iex -S mix phx.server'''
