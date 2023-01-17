@@ -280,6 +280,14 @@ def sp():
     shutil.copytree('C:\moontree\server2\serverv2_client\lib\src\protocol', 'C:\moontree\moontreeV1\client_back\lib\server\src\protocol')
     print('copied C:\moontree\server2\serverv2_client\lib\src\protocol')
     print('pasted C:\moontree\moontreeV1\client_back\lib\server\src\protocol')
+    remove = r'package:serverv2_client/src/protocol/'
+    for name in ['client', 'protocol']:
+        with open(f'C:\moontree\moontreeV1\client_back\lib\server\src\protocol\{name}.dart', mode='r') as f:
+            script = f.readlines()
+        with open(f'C:\moontree\moontreeV1\client_back\lib\server\src\protocol\{name}.dart', mode='w') as f:
+            f.writelines([line.replace(remove, '') for line in script])
+        print(f'fixed {name}.dart')
+
 
 @main.command()
 def iex():
