@@ -74,6 +74,14 @@ def c():
     pyautogui.hotkey('alt', 'f4')
 
 
+@main.command()
+@click.argument('command', type=list, nargs=-1, required=False)
+def p(command):
+    '''python <command>'''
+    commit = ' '.join([''.join(words) for words in command])
+    executeCommand(f'python {commit}')
+
+
 # github
 
 @main.command()
@@ -223,6 +231,7 @@ def jn():
     '''jupyter notebook'''
     executeCommand('jupyter notebook')
 
+
 @main.command()
 # @click.option('--watch','-w', default='watch', prompt='behavior', help='watch')
 @click.argument('behavior', type=str, required=True)
@@ -265,6 +274,7 @@ def dart(behavior: str, dir: str = ''):
         cmd = f'dart pub publish -f'
     executeCommand(cmd)
 
+
 @main.command()
 def sg():
     '''serverpod generate'''
@@ -274,10 +284,11 @@ def sg():
 @main.command()
 def sp():
     '''serverpod move protocol to client_back.'''
-    import shutil;
+    import shutil
     shutil.rmtree('C:\moontree\moontreeV1\client_back\lib\server\src\protocol')
     print('removed C:\moontree\moontreeV1\client_back\lib\server\src\protocol')
-    shutil.copytree('C:\moontree\server2\serverv2_client\lib\src\protocol', 'C:\moontree\moontreeV1\client_back\lib\server\src\protocol')
+    shutil.copytree('C:\moontree\server2\serverv2_client\lib\src\protocol',
+                    'C:\moontree\moontreeV1\client_back\lib\server\src\protocol')
     print('copied C:\moontree\server2\serverv2_client\lib\src\protocol')
     print('pasted C:\moontree\moontreeV1\client_back\lib\server\src\protocol')
     remove = r'package:serverv2_client/src/protocol/'
@@ -294,9 +305,11 @@ def iex():
     '''iex -S mix phx.server'''
     executeCommand('iex -S mix phx.server')
 
+
 def executeCommands(cmds: str, display: bool = True):
     for cmd in cmds:
         executeCommand(cmd, display=display)
+
 
 def executeCommand(cmd: str, display: bool = True):
     if display:
