@@ -334,6 +334,7 @@ def iex():
 
 def executeCommands(cmds: str, display: bool = True):
     for cmd in cmds:
+        print('>>> ' + cmd)
         executeCommand(cmd, display=display)
 
 
