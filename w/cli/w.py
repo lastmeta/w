@@ -149,7 +149,7 @@ def gg(
 
 
 @main.command()
-@click.argument('tagname', type=list, nargs=-1, required=True)
+@click.argument('tagname', type=str, required=True)
 @click.option('--commit', '-c', default='commit', prompt='commit message', help='start with a issue number if you like')
 def ggt(tagname: str, commit: str):
     '''git add --all, commit, git tag <tagname>, git push origin --tags'''
