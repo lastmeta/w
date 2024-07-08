@@ -112,6 +112,7 @@ def gc(words):
 
 @main.command()
 @click.argument('commit', type=str, required=True)
+@click.argument('commit', type=str, required=True)
 def gcn(commit: str):
     '''git commit -m "<commit>" --no-verify'''
     executeCommand(f'git commit -m "{commit}" --no-verify')
@@ -144,6 +145,31 @@ def gg(
             f'git add {add}',
             f'git commit -m "{commit}"',
             f'git push {"" if branch == "" else "-u origin " + branch}'],
+        display=False)
+
+
+@main.command()
+@click.argument('tagname', type=list, nargs=-1, required=True)
+@click.option('--commit', '-c', default='commit', prompt='commit message', help='start with a issue number if you like')
+def ggt(tagname: str, commit: str):
+    '''git add --all, commit, git tag <tagname>, git push origin --tags'''
+    add = '--all'
+    branch = ''
+    head = commit.split(' ')[0]
+    tail = ' '.join(commit.split(' ')[1:])
+    if head.isnumeric():
+        head = '#' + head
+    if tail != '':
+        commit = head + ' ' + tail
+    else:
+        commit = head
+    executeCommands(
+        [
+            'git status',
+            f'git add {add}',
+            f'git commit -m "{commit}"',
+            f'git tag "{tagname}"',
+            f'git push {"" if branch == "" else "-u origin " + branch} --tags'],
         display=False)
 
 
