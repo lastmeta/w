@@ -169,7 +169,8 @@ def ggt(tagname: str, commit: str):
             f'git add {add}',
             f'git commit -m "{commit}"',
             f'git tag {tagname}',
-            f'git push {"" if branch == "" else "-u origin " + branch} --tags'],
+            f'git push {"" if branch == "" else "-u origin " + branch} --tags',
+            'git push'],
         display=False)
 
 
